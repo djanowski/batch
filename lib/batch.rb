@@ -18,6 +18,9 @@ class Batch
         yield(item)
         print "."
 
+      rescue Interrupt
+        break
+
       rescue Exception => e
         print "E"
         @errors << [item, e]
