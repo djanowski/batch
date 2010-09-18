@@ -45,8 +45,12 @@ class Batch
     $stderr.puts "\nSome errors occured:\n\n"
 
     @errors.each do |item, error|
-      $stderr.puts "#{item.inspect}: #{error}\n"
+      report_error(item, error)
     end
+  end
+
+  def report_error(item, error)
+    $stderr.puts "#{item.inspect}: #{error}\n"
   end
 
   def total
