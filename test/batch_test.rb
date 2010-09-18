@@ -1,4 +1,6 @@
-require File.join(File.dirname(__FILE__), "test_helper")
+# encoding: UTF-8
+
+require File.expand_path("./test_helper", File.dirname(__FILE__))
 
 class BatchTest < Test::Unit::TestCase
   should "report" do

@@ -1,6 +1,7 @@
 require "stringio"
 require "contest"
-require File.join(File.dirname(__FILE__), "..", "lib", "batch")
+
+require File.expand_path("./../lib/batch", File.dirname(__FILE__))
 
 def capture
   stdout, $stdout = $stdout, StringIO.new
