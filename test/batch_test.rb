@@ -42,4 +42,21 @@ EOS
     assert_equal expected_stdout.rstrip, stdout.rstrip
     assert_equal expected_stderr.rstrip, stderr.rstrip
   end
+
+  should "use BATCH_WIDTH" do
+    ENV["BATCH_WIDTH"] = "40"
+    stdout, _ = capture do
+      Batch.each((1..80).to_a) do |item|
+        item + 1
+      end
+    end
+
+    expected = <<-EOS
+  0% ........................................
+ 50% ........................................
+100%
+EOS
+
+    assert_equal expected.rstrip, stdout.rstrip
+  end
 end

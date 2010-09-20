@@ -5,6 +5,7 @@ class Batch
 
   def initialize(enumerable)
     @enumerable = enumerable
+    @width = (ENV["BATCH_WIDTH"] || 75).to_i
   end
 
   def each(&block)
@@ -66,7 +67,7 @@ class Batch
   end
 
   def eol?
-    @current % 75 == 0 || @current == total
+    @current % @width == 0 || @current == total
   end
 
   def self.each(enumerable, &block)
