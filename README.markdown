@@ -7,7 +7,7 @@ Description
 -----------
 
 Say you have a thousand images to process. You write a script, fire it and go
-to bed, only to realize the morning after that and exception was raised and the
+to bed, only to realize the morning after that an exception was raised and the
 script was aborted. Well, no more frustration: now you can use Batch to make
 sure your script continues working despite those exceptions, and you can now
 get a nice report to read while you drink your morning coffee.
