@@ -32,7 +32,14 @@ EOS
 100%
 EOS
 
+
     expected_stderr = <<-EOS
+
+
+Completed.
+
+     Elapsed:   0 seconds
+     Errors:    1
 
 Some errors occured:
 

@@ -47,6 +47,47 @@ don't get interrupted right after you go to bed:
 You can determine the line width by setting the environment variable
 `BATCH_WIDTH`, which defaults to 75.
 
+Logging
+-------
+
+You may specify `:log` in the options for `#each`:
+
+    Batch.each(Model.all, :log => File.open('foo.log', 'w')) do { |model|
+      # do something with model
+    }
+
+Or you may specify default options using `Batch.options`:
+
+    Batch.options[:log] = File.open('foo.log', 'w')
+
+    Batch.each(Model.all) do { |model|
+      # do something with model
+    }
+
+This will put all errors into the given log file, and periodically update
+it with the status.
+
+Showing status
+--------------
+
+Press Ctrl+C to show the status.
+
+    0%  ...........................................................................
+    15% ............E.........................E...................^C
+    
+         11% done (58 of 500)
+         Elapsed:   0 seconds
+         Remaining: 4 seconds
+         Errors:    2
+         Press Ctrl+C again to abort.
+    
+        ...........................................................................
+    30% ..........E......E.........................................................
+
+You can disable this behavior with:
+
+    Batch.options[:status_on_interrupt] = false
+
 Installation
 ------------
 
