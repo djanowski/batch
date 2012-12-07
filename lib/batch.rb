@@ -73,4 +73,11 @@ class Batch
   def self.each(enumerable, &block)
     new(enumerable).each(&block)
   end
+
+  def self.start(title, enumerable, &block)
+    puts
+    puts(title)
+    puts
+    each(enumerable, &block)
+  end
 end

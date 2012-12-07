@@ -59,4 +59,21 @@ EOS
 
     assert_equal expected.rstrip, stdout.rstrip
   end
+
+  should "print a title" do
+    stdout, _ = capture do
+      Batch.start("Printing numbers", [1]) do |item|
+      end
+    end
+
+    expected = <<-EOS
+
+Printing numbers
+
+  0% .
+100%
+EOS
+
+    assert_equal expected.rstrip, stdout.rstrip
+  end
 end
