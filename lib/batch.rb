@@ -65,6 +65,7 @@ class Batch
 
   def progress
     return unless @size
+    return 0 if @size == 0
 
     @current * 100 / @size
   end

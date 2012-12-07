@@ -95,4 +95,16 @@ EOS
 
     assert_equal expected.rstrip, stdout.rstrip
   end
+
+  should "work with empty enumerables" do
+    stdout, _ = capture do
+      Batch.each([]) { }
+    end
+
+    expected = <<-EOS
+  0%
+EOS
+
+    assert_equal expected.rstrip, stdout.rstrip
+  end
 end
