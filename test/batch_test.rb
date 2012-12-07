@@ -3,6 +3,10 @@
 require File.expand_path("./test_helper", File.dirname(__FILE__))
 
 class BatchTest < Test::Unit::TestCase
+  setup do
+    ENV["BATCH_WIDTH"] = nil
+  end
+
   should "report" do
     stdout, _ = capture do
       Batch.each((1..80).to_a) do |item|
@@ -45,6 +49,7 @@ EOS
 
   should "use BATCH_WIDTH" do
     ENV["BATCH_WIDTH"] = "40"
+
     stdout, _ = capture do
       Batch.each((1..80).to_a) do |item|
         item + 1
@@ -71,6 +76,20 @@ EOS
 Printing numbers
 
   0% .
+100%
+EOS
+
+    assert_equal expected.rstrip, stdout.rstrip
+  end
+
+  should "work with unknown sizes" do
+    stdout, _ = capture do
+      Batch.each(1..80) { }
+    end
+
+    expected = <<-EOS
+   ? ...........................................................................
+   ? .....
 100%
 EOS
 

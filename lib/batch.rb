@@ -6,13 +6,14 @@ class Batch
   def initialize(enumerable)
     @enumerable = enumerable
     @width = (ENV["BATCH_WIDTH"] || 75).to_i
+    @size = enumerable.size if enumerable.respond_to?(:size)
   end
 
   def each(&block)
     @errors = []
     @current = 0
 
-    print "  0% "
+    report_progress
 
     enumerable.each do |item|
       begin
@@ -29,11 +30,15 @@ class Batch
       ensure
         @current += 1
 
-        report_progress if eol?
+        if eol?
+          print "\n"
+          report_progress
+        end
       end
     end
 
     print "\n"
+    puts "100% " unless eol?
 
     report_errors
 
@@ -55,19 +60,25 @@ class Batch
   end
 
   def total
-    @enumerable.size
+    @size
   end
 
   def progress
-    @current * 100 / total
+    return unless @size
+
+    @current * 100 / @size
   end
 
   def report_progress
-    print "\n#{progress.to_s.rjust 3, " "}% "
+    if progress
+      print "#{progress.to_s.rjust 3, " "}% "
+    else
+      print "   ? "
+    end
   end
 
   def eol?
-    @current % @width == 0 || @current == total
+    @current % @width == 0
   end
 
   def self.each(enumerable, &block)
