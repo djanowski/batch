@@ -19,8 +19,8 @@ class Batch
         yield(item)
         print "."
 
-      rescue Interrupt
-        break
+      rescue Interrupt => e
+        raise e
 
       rescue Exception => e
         print "E"
