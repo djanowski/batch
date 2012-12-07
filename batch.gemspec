@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = "batch"
-  s.version           = "1.0.0"
+  s.version           = "1.0.1"
   s.summary           = "Iterate Enumerables with progress reporting."
   s.authors           = ["Damian Janowski", "Michel Martens"]
   s.email             = ["djanowski@dimaion.com", "michel@soveran.com"]
