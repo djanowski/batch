@@ -21,6 +21,7 @@ class Batch
         print "."
 
       rescue Interrupt => e
+        report_errors
         raise e
 
       rescue Exception => e
