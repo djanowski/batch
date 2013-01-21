@@ -1,9 +1,11 @@
+require_relative "lib/batch"
+
 Gem::Specification.new do |s|
   s.name              = "batch"
-  s.version           = "1.0.1"
+  s.version           = Batch::VERSION
   s.summary           = "Iterate Enumerables with progress reporting."
   s.authors           = ["Damian Janowski", "Michel Martens"]
   s.email             = ["djanowski@dimaion.com", "michel@soveran.com"]
   s.homepage          = "http://github.com/djanowski/batch"
-  s.files = ["UNLICENSE", "README.markdown", "Rakefile", "lib/batch.rb", "batch.gemspec", "test/batch_test.rb", "test/test_helper.rb"]
+  s.files = `git ls-files`.split("\n")
 end
