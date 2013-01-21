@@ -1,4 +1,4 @@
-require_relative "lib/batch"
+require "./lib/batch"
 
 Gem::Specification.new do |s|
   s.name              = "batch"
