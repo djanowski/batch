@@ -96,15 +96,19 @@ EOS
     assert_equal expected.rstrip, stdout.rstrip
   end
 
-  should "work with empty enumerables" do
-    stdout, _ = capture do
+  should "not print anything when there's nothing to do" do
+    stdout, stderr = capture do
       Batch.each([]) { }
     end
 
-    expected = <<-EOS
-  0%
-EOS
+    assert_empty stdout.rstrip
+    assert_empty stderr.rstrip
 
-    assert_equal expected.rstrip, stdout.rstrip
+    stdout, stderr = capture do
+      Batch.start("Not much work", []) { }
+    end
+
+    assert_empty stdout.rstrip
+    assert_empty stderr.rstrip
   end
 end

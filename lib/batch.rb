@@ -13,9 +13,9 @@ class Batch
     @errors = []
     @current = 0
 
-    report_progress
+    enumerable.each.with_index do |item, index|
+      report_progress if index == 0
 
-    enumerable.each do |item|
       begin
         yield(item)
         print "."
@@ -38,10 +38,12 @@ class Batch
       end
     end
 
-    print "\n"
-    puts "100% " unless eol?
+    if @current > 0
+      print "\n"
+      puts "100% " unless eol?
 
-    report_errors
+      report_errors
+    end
 
     nil
   end
@@ -88,9 +90,16 @@ class Batch
   end
 
   def self.start(title, enumerable, &block)
+    begin
+      enumerable.each.next
+    rescue StopIteration
+      return
+    end
+
     puts
     puts(title)
     puts
+
     each(enumerable, &block)
   end
 end
