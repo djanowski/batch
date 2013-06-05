@@ -13,36 +13,38 @@ class Batch
     @errors = []
     @current = 0
 
-    enumerable.each.with_index do |item, index|
-      report_progress if index == 0
+    Batch.out do |io|
+      enumerable.each.with_index do |item, index|
+        report_progress(io) if index == 0
 
-      begin
-        yield(item)
-        print "."
+        begin
+          yield(item)
+          io.print "."
 
-      rescue Interrupt => e
-        report_errors
-        raise e
+        rescue Interrupt => e
+          report_errors
+          raise e
 
-      rescue Exception => e
-        print "E"
-        @errors << [item, e]
+        rescue Exception => e
+          io.print "E"
+          @errors << [item, e]
 
-      ensure
-        @current += 1
+        ensure
+          @current += 1
 
-        if eol?
-          print "\n"
-          report_progress
+          if eol?
+            io.print "\n"
+            report_progress(io)
+          end
         end
       end
-    end
 
-    if @current > 0
-      print "\n"
-      puts "100% " unless eol?
+      if @current > 0
+        io.print "\n"
+        io.puts "100% " unless eol?
 
-      report_errors
+        report_errors
+      end
     end
 
     nil
@@ -73,11 +75,11 @@ class Batch
     @current * 100 / @size
   end
 
-  def report_progress
+  def report_progress(io)
     if progress
-      print "#{progress.to_s.rjust 3, " "}% "
+      io.print "#{progress.to_s.rjust 3, " "}% "
     else
-      print "   ? "
+      io.print "   ? "
     end
   end
 
@@ -96,10 +98,20 @@ class Batch
       return
     end
 
-    puts
-    puts(title)
-    puts
+    out do |io|
+      io.puts
+      io.puts(title)
+      io.puts
+    end
 
     each(enumerable, &block)
+  end
+
+  def self.out(&block)
+    interactive? ? yield($stdout) : File.open("/dev/null", "w", &block)
+  end
+
+  def self.interactive?
+    (ENV["BATCH_INTERACTIVE"] || 1).to_i == 1
   end
 end
