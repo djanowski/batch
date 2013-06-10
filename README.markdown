@@ -47,6 +47,19 @@ don't get interrupted right after you go to bed:
 You can determine the line width by setting the environment variable
 `BATCH_WIDTH`, which defaults to 75.
 
+Debugging
+---------
+
+If you want Batch to halt as soon as there's an exception (just like a regular
+`each` loop would do), simply set `$DEBUG` to true. If you're running Ruby
+explicitly, then:
+
+    $ ruby -d <your-batch-script>
+
+If you're running another tool which uses Batch, then set `RUBYOPT`:
+
+    $ RUBYOPT=-d rake foo
+
 Installation
 ------------
 
