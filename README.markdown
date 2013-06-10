@@ -47,6 +47,17 @@ don't get interrupted right after you go to bed:
 You can determine the line width by setting the environment variable
 `BATCH_WIDTH`, which defaults to 75.
 
+Disabling output
+----------------
+
+On some environments, like a non-interactive shell, you probably want Batch
+to still run your stuff and skip errors, but you don't want all the progress
+output. For this purpose you can tweak `BATCH_INTERACTIVE`:
+
+    $ BATCH_INTERACTIVE=0 rake foo
+
+It's probably useful to have `BATCH_INTERACTIVE` set to `0` on your crontabs.
+
 Debugging
 ---------
 
