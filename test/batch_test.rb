@@ -132,6 +132,28 @@ EOS
     assert_empty stderr.rstrip
   end
 
+  should "halt when $DEBUG is set to true" do
+    items = []
+
+    stdout, stderr = capture do
+      begin
+        $DEBUG = true
+
+        assert_raises(ArgumentError) do
+          Batch.each((1..80).to_a) do |item|
+            items << item
+            raise ArgumentError, "Two is bad." if item == 2
+          end
+        end
+      ensure
+        $DEBUG = false
+      end
+    end
+
+    assert_equal [1, 2], items
+    assert_equal "  0% .", stdout
+  end
+
   def with_env(env)
     old = {}
 

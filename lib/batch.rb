@@ -26,6 +26,7 @@ class Batch
           raise e
 
         rescue Exception => e
+          raise e if $DEBUG
           io.print "E"
           @errors << [item, e]
 
