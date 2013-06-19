@@ -7,6 +7,7 @@ class Batch
     @enumerable = enumerable
     @width = (ENV["BATCH_WIDTH"] || 75).to_i
     @size = enumerable.size if enumerable.respond_to?(:size)
+    @debug = $DEBUG || (ENV["BATCH_DEBUG"] || "0").to_i == 1
   end
 
   def each(&block)
@@ -26,7 +27,7 @@ class Batch
           raise e
 
         rescue Exception => e
-          raise e if $DEBUG
+          raise e if @debug
           io.print "E"
           @errors << [item, e]
 

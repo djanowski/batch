@@ -62,14 +62,11 @@ Debugging
 ---------
 
 If you want Batch to halt as soon as there's an exception (just like a regular
-`each` loop would do), simply set `$DEBUG` to true. If you're running Ruby
-explicitly, then:
+`each` loop would do), set `BATCH_DEBUG`:
 
-    $ ruby -d <your-batch-script>
+    $ BATCH_DEBUG=1 ruby <your-batch-script>
 
-If you're running another tool which uses Batch, then set `RUBYOPT`:
-
-    $ RUBYOPT=-d rake foo
+Batch will also honor the `$DEBUG` flag and halt if an exception is caught.
 
 Installation
 ------------

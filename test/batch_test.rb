@@ -154,6 +154,21 @@ EOS
     assert_equal "  0% .", stdout
   end
 
+  should "halt when BATCH_DEBUG is set to 1" do
+    items = []
+
+    assert_raises(ArgumentError) do
+      with_env("BATCH_DEBUG" => "1", "BATCH_INTERACTIVE" => "0") do
+        Batch.each((1..80).to_a) do |item|
+          items << item
+          raise ArgumentError, "Two is bad." if item == 2
+        end
+      end
+    end
+
+    assert_equal [1, 2], items
+  end
+
   def with_env(env)
     old = {}
 
